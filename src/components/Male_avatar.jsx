@@ -7,7 +7,7 @@ import * as THREE from "three";
 export default function Model(props) {
   const group = useRef();
   const { viewport } = useThree();
-  const { scene } = useGLTF("/male_avatar.glb");
+  const { scene } = useGLTF("/portfolio2/male_avatar.glb");
 
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
@@ -117,4 +117,4 @@ export default function Model(props) {
   );
 }
 
-useGLTF.preload("/male_avatar.glb");
+useGLTF.preload("/portfolio2/male_avatar.glb");
