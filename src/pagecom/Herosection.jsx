@@ -69,43 +69,41 @@ const Herosection = () => {
 
           <Canvas
             camera={{ position: [0, 0, 6.5], fov: 42 }}
-            dpr={[1, 1.5]}
+            dpr={[1, 1.2]}
+            flat
             gl={{
-              antialias: true,
+              antialias: false,
               alpha: true,
               powerPreference: "high-performance",
+              depth: true,
+              stencil: false,
             }}
             className="z-10"
           >
             <Suspense fallback={null}>
-              <ambientLight intensity={1} />
-              <spotLight
-                position={[10, 10, 10]}
-                angle={0.15}
-                penumbra={1}
-                intensity={2}
-              />
-
+              <ambientLight intensity={1.5} />
               <Environment preset="city" />
 
-              <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.3}>
+              <Float speed={1.2} rotationIntensity={0.2} floatIntensity={0.2}>
                 <Model />
               </Float>
 
-              <ContactShadows
-                position={[0, -2, 0]}
-                opacity={0.4}
-                scale={8}
-                blur={2.5}
-                far={4}
-              />
+              {!isMobile && (
+                <ContactShadows
+                  position={[0, -2, 0]}
+                  opacity={0.4}
+                  scale={8}
+                  blur={2.5}
+                  far={4}
+                />
+              )}
             </Suspense>
           </Canvas>
         </div>
 
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <Antigravity
-            count={isMobile ? 60 : 200}
+            count={isMobile ? 40 : 150}
             particleSize={isMobile ? 0.8 : 1.2}
             magnetRadius={isMobile ? 8 : 16}
             lerpSpeed={0.05}
