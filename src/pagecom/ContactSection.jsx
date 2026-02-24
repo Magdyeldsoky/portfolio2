@@ -27,10 +27,10 @@ const Contact = () => {
         import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY,
       );
       setSubmitted(true);
-      setTimeout(() => setSubmitted(false), 5000);
+      setTimeout(() => setSubmitted(false), 6000);
       setForm({ name: "", email: "", message: "" });
     } catch (error) {
-      alert("Error occurred.");
+      alert("Error.");
     } finally {
       setLoading(false);
     }
@@ -39,37 +39,36 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="relative py-32 bg-background overflow-hidden border-t border-border"
+      className="relative py-24 md:py-32 bg-background overflow-hidden border-t border-border"
     >
-      {/* Antigravity Layer */}
       <div
-        className={`absolute inset-0 pointer-events-none transition-all duration-1000 ${submitted ? "z-50 opacity-100" : "z-0 opacity-40"}`}
+        className={`absolute inset-0 pointer-events-none transition-all duration-1000 ${submitted ? "z-50 opacity-100" : "z-0 opacity-50"}`}
       >
         <Antigravity
           mode={focused}
-          isTyping={form.name.length + form.email.length}
+          isTyping={form.name.length + form.email.length + form.message.length}
           isSuccess={submitted}
         />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-          <div className="lg:col-span-5">
-            <h3 className="text-6xl md:text-8xl font-black text-foreground italic uppercase leading-[0.85] tracking-tighter mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="lg:col-span-5 text-center lg:text-left">
+            <motion.h3 className="text-5xl md:text-8xl font-black text-foreground italic uppercase leading-[0.85] tracking-tighter">
               Let's <br /> <span className="text-primary">Connect.</span>
-            </h3>
+            </motion.h3>
           </div>
 
-          <motion.div className="lg:col-span-7">
-            <div className="bg-card/30 backdrop-blur-xl border border-border p-10 md:p-14 rounded-[3rem] shadow-2xl">
+          <div className="lg:col-span-7">
+            <div className="bg-card/20 dark:bg-zinc-950/30 backdrop-blur-xl border border-border p-8 md:p-14 rounded-[2.5rem] md:rounded-[3rem] shadow-2xl">
               <form
                 ref={formRef}
                 onSubmit={handleSubmit}
-                className="space-y-10"
+                className="space-y-8 md:space-y-10"
               >
-                <div className="relative group">
-                  <label className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                    Full Name
+                <div className="relative">
+                  <label className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-2 block">
+                    Name
                   </label>
                   <input
                     type="text"
@@ -79,13 +78,13 @@ const Contact = () => {
                     onBlur={() => setFocused("")}
                     onChange={handleChange}
                     required
-                    className="w-full bg-transparent border-b border-border py-4 text-foreground focus:outline-none text-xl"
+                    className="w-full bg-transparent border-b border-border py-3 md:py-4 text-foreground focus:outline-none text-xl md:text-2xl font-light transition-all focus:border-primary"
                   />
                 </div>
 
-                <div className="relative group">
-                  <label className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                    Email Address
+                <div className="relative">
+                  <label className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-2 block">
+                    Email
                   </label>
                   <input
                     type="email"
@@ -95,12 +94,12 @@ const Contact = () => {
                     onBlur={() => setFocused("")}
                     onChange={handleChange}
                     required
-                    className="w-full bg-transparent border-b border-border py-4 text-foreground focus:outline-none text-xl"
+                    className="w-full bg-transparent border-b border-border py-3 md:py-4 text-foreground focus:outline-none text-xl md:text-2xl font-light transition-all focus:border-primary"
                   />
                 </div>
 
-                <div className="relative group">
-                  <label className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                <div className="relative">
+                  <label className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-2 block">
                     Message
                   </label>
                   <textarea
@@ -109,22 +108,22 @@ const Contact = () => {
                     onFocus={() => setFocused("message")}
                     onBlur={() => setFocused("")}
                     onChange={handleChange}
-                    rows="3"
+                    rows="2"
                     required
-                    className="w-full bg-transparent border-b border-border py-4 text-foreground focus:outline-none text-xl resize-none"
+                    className="w-full bg-transparent border-b border-border py-3 md:py-4 text-foreground focus:outline-none text-xl md:text-2xl font-light resize-none transition-all focus:border-primary"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-6 bg-primary text-primary-foreground font-black rounded-2xl shadow-xl transition-all active:scale-95"
+                  className="w-full py-5 md:py-6 bg-primary text-primary-foreground font-black rounded-2xl tracking-widest hover:brightness-110 active:scale-[0.98] transition-all"
                 >
-                  {loading ? "SENDING..." : "SHOOT MESSAGE"}
+                  {loading ? "SENDING..." : "SEND MESSAGE"}
                 </button>
               </form>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
@@ -134,11 +133,20 @@ const Contact = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 z-[60] flex items-center justify-center bg-background/20 backdrop-blur-sm pointer-events-none"
+            className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-background/70 backdrop-blur-md"
           >
-            <h2 className="text-7xl md:text-9xl font-black text-primary italic tracking-tighter">
-              DONE!
-            </h2>
+            <motion.div
+              initial={{ scale: 0.8, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="text-center px-6"
+            >
+              <h2 className="text-7xl md:text-[12rem] font-black italic text-primary leading-none tracking-tighter">
+                DONE!
+              </h2>
+              <p className="text-lg md:text-2xl font-mono tracking-[0.3em] md:tracking-[0.4em] text-foreground mt-6 md:mt-8 opacity-90 uppercase">
+                Message received safely
+              </p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
