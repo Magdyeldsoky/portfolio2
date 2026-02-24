@@ -12,8 +12,7 @@ const Nav = () => {
   const navItems = [
     { name: "Home", href: "#hero" },
     { name: "About", href: "#about" },
-    { name: "Skills", href: "#Skills" },
-    { name: "Projects", href: "#projects" },
+    { name: "Skills", href: "#skills" },
     { name: "Contact", href: "#contact" },
   ];
 
@@ -30,6 +29,20 @@ const Nav = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100vh";
+    } else {
+      document.body.style.overflow = "unset";
+      document.body.style.height = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+      document.body.style.height = "auto";
+    };
+  }, [isOpen]);
 
   const toggleTheme = () => {
     const newDark = !isDark;
@@ -49,8 +62,8 @@ const Nav = () => {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <a
-          href="#"
-          className="text-xl font-bold tracking-tighter shrink-0 relative z-50"
+          href="#hero"
+          className="text-xl font-bold tracking-tighter shrink-0 relative z-[60]"
         >
           <span className="text-foreground">Magdy.</span>
           <span className="text-primary">Dev</span>
@@ -78,7 +91,7 @@ const Nav = () => {
           </button>
         </div>
 
-        <div className="flex items-center space-x-3 md:hidden relative z-50">
+        <div className="flex items-center space-x-3 md:hidden relative z-[60]">
           <button onClick={toggleTheme} className="p-2 text-foreground">
             {isDark ? <Sun size={20} /> : <Moon size={20} />}
           </button>
@@ -86,7 +99,6 @@ const Nav = () => {
             onClick={() => setIsOpen(!isOpen)}
             className="p-2 text-foreground transition-transform active:scale-90"
           >
-            {/* استخدام AnimatePresence داخل الزر لجعل التبديل ناعماً */}
             <div className="relative w-6 h-6 flex items-center justify-center">
               {isOpen ? <X size={26} /> : <Menu size={26} />}
             </div>
@@ -96,13 +108,21 @@ const Nav = () => {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed inset-0 bg-background z-40 flex flex-col items-center justify-center md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 h-[100dvh] w-screen bg-background z-[50] flex flex-col items-center justify-center md:hidden"
+              style={{ top: 0, left: 0 }}
             >
-              <div className="flex flex-col space-y-8 text-center">
+              <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-background pointer-events-none" />
+
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="flex flex-col space-y-10 text-center relative z-10"
+              >
                 {navItems.map((item, i) => (
                   <motion.a
                     key={item.name}
@@ -110,13 +130,13 @@ const Nav = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    className="text-4xl font-black text-foreground hover:text-primary transition-colors"
+                    className="text-5xl font-black text-foreground hover:text-primary transition-colors tracking-tight"
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
                   </motion.a>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>

@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState, Suspense } from "react";
-import Antigravity from "@/components/Antigravity";
 import Nav from "../components/nav";
 import { motion } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
@@ -18,7 +17,10 @@ const Herosection = () => {
   }, []);
 
   return (
-    <main className="relative min-h-svh w-full bg-background overflow-hidden">
+    <main
+      id="hero"
+      className="relative min-h-svh w-full bg-background overflow-hidden"
+    >
       <Nav />
 
       <section className="relative container mx-auto px-6 sm:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-svh pt-20">
@@ -55,13 +57,16 @@ const Herosection = () => {
             </p>
           </motion.div>
 
-          <motion.button
+          <motion.a
+            href="https://github.com/Magdyeldsoky?tab=repositories"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-10 py-4 bg-primary text-primary-foreground font-bold rounded-full shadow-lg shadow-primary/20 transition-all"
+            className="inline-block px-10 py-4 bg-primary text-primary-foreground font-bold rounded-full shadow-lg shadow-primary/20 transition-all text-center"
           >
             View My Projects
-          </motion.button>
+          </motion.a>
         </div>
 
         <div className="relative h-[500px] lg:h-[700px] w-full flex items-center justify-center order-1 lg:order-2">
@@ -99,16 +104,6 @@ const Herosection = () => {
               )}
             </Suspense>
           </Canvas>
-        </div>
-
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <Antigravity
-            count={isMobile ? 40 : 150}
-            particleSize={isMobile ? 0.8 : 1.2}
-            magnetRadius={isMobile ? 8 : 16}
-            lerpSpeed={0.05}
-            colorVar="--primary"
-          />
         </div>
       </section>
     </main>
